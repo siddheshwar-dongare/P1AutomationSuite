@@ -40,13 +40,18 @@ jobs:
       - name: Install Matching ChromeDriver
         run: |
           set -e
-          CHROMEDRIVER_VERSION="133.0.6943.98"  # Confirmed compatible version
-          echo "Using ChromeDriver version: $CHROMEDRIVER_VERSION"
-    
-          wget -q https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+          CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
+          CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+          
+          echo "Using Chrome Version: $CHROME_VERSION"
+          echo "Using ChromeDriver Version: $CHROMEDRIVER_VERSION"
+          
+          wget -q "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
           unzip -o chromedriver_linux64.zip
           sudo mv chromedriver /usr/bin/chromedriver
           sudo chmod +x /usr/bin/chromedriver
+
+          echo "✅ ChromeDriver installed successfully!"
           
       - name: Set Environment Variables
         run: echo "MAVEN_OPTS=--add-exports jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED --add-opens jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED" >> $GITHUB_ENV
