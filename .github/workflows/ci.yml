@@ -39,14 +39,6 @@ jobs:
           sudo apt-get install -y google-chrome-stable
           sudo apt-get install -y chromium-chromedriver
 
-      - name: Install Firefox & GeckoDriver
-        run: |
-          sudo apt-get install -y firefox
-          GECKODRIVER_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
-          wget "https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz"
-          tar -xvzf "geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz"
-          chmod +x geckodriver
-          sudo mv geckodriver /usr/local/bin/
 
       - name: Run Selenium Tests
         run: mvn test
