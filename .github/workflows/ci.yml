@@ -38,12 +38,14 @@ jobs:
         run: |
           sudo apt-get install -y google-chrome-stable
           sudo apt-get install -y chromium-chromedriver
-
+          
+      - name: Set Environment Variables
+        run: echo "MAVEN_OPTS=--add-exports jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED --add-opens jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED" >> $GITHUB_ENV
 
       - name: Run Selenium Tests
-        run: mvn clean test -Dmaven.compiler.forceJavacCompilerUse=true \
-          --add-exports jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED \
-          --add-opens jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED
+          export MAVEN_OPTS="--add-exports jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED \
+          --add-opens jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED"
+          mvn clean test -Dmaven.compiler.forceJavacCompilerUse=true
 
       - name: Upload Cucumber Reports
         uses: actions/upload-artifact@v4
