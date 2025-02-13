@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.sid.automation.runners.TestRunner
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 19.202 s - in com.sid.automation.runners.TestRunner

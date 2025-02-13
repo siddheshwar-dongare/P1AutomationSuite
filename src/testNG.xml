@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="SauseLab Automation Test Suite">
+     <listeners>
+        <listener class-name="com.sid.automation.listeners.TestListener"/>
+    </listeners>
+    <test name="Sause Lab">
+        <classes>
+            <class name="com.sid.automation.runners.TestRunner"/>
+        </classes>
+    </test>
+</suite>

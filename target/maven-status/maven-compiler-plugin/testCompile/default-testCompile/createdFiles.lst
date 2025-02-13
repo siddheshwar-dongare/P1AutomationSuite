@@ -1,0 +1,5 @@
+com\sid\automation\stepdefinitions\Hooks.class
+com\sid\automation\stepdefinitions\addToCartSteps.class
+com\sid\automation\stepdefinitions\logOutSteps.class
+com\sid\automation\runners\TestRunner.class
+com\sid\automation\stepdefinitions\sauselabloginSteps.class
