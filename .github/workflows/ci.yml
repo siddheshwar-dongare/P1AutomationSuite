@@ -43,9 +43,7 @@ jobs:
         run: echo "MAVEN_OPTS=--add-exports jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED --add-opens jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED" >> $GITHUB_ENV
 
       - name: Run Selenium Tests
-          export MAVEN_OPTS="--add-exports jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED \
-          --add-opens jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED"
-          mvn clean test -Dmaven.compiler.forceJavacCompilerUse=true
+        run: mvn clean test -Dmaven.compiler.forceJavacCompilerUse=true
 
       - name: Upload Cucumber Reports
         uses: actions/upload-artifact@v4
