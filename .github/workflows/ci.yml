@@ -41,7 +41,9 @@ jobs:
 
 
       - name: Run Selenium Tests
-        run: mvn test
+        run: mvn clean test -Dmaven.compiler.forceJavacCompilerUse=true \
+          --add-exports jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED \
+          --add-opens jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED
 
       - name: Upload Cucumber Reports
         uses: actions/upload-artifact@v4
