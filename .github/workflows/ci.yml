@@ -1,0 +1,58 @@
+name: Run Selenium Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'  # Use 'adopt' if needed
+          java-version: '17'  # Change if using a different version
+
+      - name: Set Up Maven
+        run: sudo apt-get install -y maven
+
+      - name: Install Xvfb (For GUI Browser Execution)
+        run: sudo apt-get install -y xvfb
+
+      - name: Start Virtual Display
+        run: Xvfb :99 -ac &
+
+      - name: Set Display for Non-Headless Execution
+        run: echo "DISPLAY=:99" >> $GITHUB_ENV
+
+      - name: Install Chrome & ChromeDriver
+        run: |
+          sudo apt-get install -y google-chrome-stable
+          sudo apt-get install -y chromium-chromedriver
+
+      - name: Install Firefox & GeckoDriver
+        run: |
+          sudo apt-get install -y firefox
+          GECKODRIVER_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+          wget "https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz"
+          tar -xvzf "geckodriver-$GECKODRIVER_VERSION-linux64.tar.gz"
+          chmod +x geckodriver
+          sudo mv geckodriver /usr/local/bin/
+
+      - name: Run Selenium Tests
+        run: mvn test
+
+      - name: Upload Cucumber Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: cucumber-reports
+          path: target/cucumber-reports
