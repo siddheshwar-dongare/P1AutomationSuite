@@ -24,8 +24,21 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn clean test --file pom.xml
-    - name: Upload Test Reports
+    - name: Upload Extent Report
       uses: actions/upload-artifact@v4
       with:
-          name: TestReports
-          path: reports/
+          name: ExtentReport
+          path: extent-reports/ExtentReport.html
+          retention-days: 7  # Optional: Keeps the report for 7 days
+
+    - name: Send Email Notification
+      uses: dawidd6/action-send-mail@v3
+      with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "Automation Test Report"
+          body: "Download the latest Extent Report here: https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO/actions/runs/${{ github.run_id }}"
+          to: siddheshwardongare@gmail.com
+          from: GitHub Actions
