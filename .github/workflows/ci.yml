@@ -29,4 +29,4 @@ jobs:
       with:
           name: ExtentReport
           path: extent-reports/ExtentReport.html
-          retention-days: 7  # Optional: Keeps the report for 7 days
+          retention-days: 7  # Optional: Keeps the report for 7 days..
