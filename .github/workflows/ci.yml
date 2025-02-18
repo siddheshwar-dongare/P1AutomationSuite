@@ -24,3 +24,8 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn clean test --file pom.xml
+    - name: Upload Test Reports
+      uses: actions/upload-artifact@v3
+      with:
+          name: TestReports
+          path: reports/
